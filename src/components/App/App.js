@@ -8,6 +8,12 @@ import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
+import Restaurants from '../Restaurant/Restaurants'
+import Restaurant from '../Restaurant/Restaurant'
+import CreateRestaurant from '../Restaurant/CreateRestaurant'
+import CreateComment from '../Restaurant/CreateComment'
+import UpdateRestaurant from '../Restaurant/UpdateRestaurant'
+import UpdateComment from '../Restaurant/UpdateComment'
 
 class App extends Component {
   constructor () {
@@ -42,6 +48,48 @@ class App extends Component {
           />
         ))}
         <main className="container">
+          {/* <Route exact path="/" component={Restaurants} /> */}
+          {/* <Route exact path="/restaurants" component={Restaurants} />
+           */}
+          <Route exact path="/" render={() => (
+            <Restaurants user={user} alert={this.alert} />
+          )} />
+          <Route exact path="/restaurants" render={() => (
+            <Restaurants user={user} alert={this.alert} />
+          )} />
+          <Route user={user} exact path='/restaurants/:id' render={({ match }) => (
+            <Restaurant user={user} match={match} alert={this.alert}/>
+          )} />
+          {/* <AuthenticatedRoute user={user} exact path='/restaurants/:id' render={({ match }) => (
+            <Restaurant user={user} match={match} alert={this.alert}/>
+          )} /> */}
+          <AuthenticatedRoute user={user} exact path='/restaurants/:id/edit' render={({ match }) => (
+            <UpdateRestaurant alert={this.alert} user={user} match={match} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/comments/:id/edit' render={({ match }) => (
+            <UpdateComment alert={this.alert} user={user} match={match} />
+          )} />
+          <AuthenticatedRoute
+            user={user}
+            path="/create-restaurant"
+            render={() => (
+              <CreateRestaurant
+                user={user}
+                alert={this.alert}
+              />
+            )}
+          />
+          {/* Comment's part */}
+          <AuthenticatedRoute
+            user={user}
+            path="/create-comment"
+            render={() => (
+              <CreateComment
+                user={user}
+                alert={this.alert}
+              />
+            )}
+          />
           <Route path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />
           )} />
@@ -54,6 +102,7 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword alert={this.alert} user={user} />
           )} />
+
         </main>
       </Fragment>
     )
