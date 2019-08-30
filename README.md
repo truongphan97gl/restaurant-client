@@ -12,7 +12,7 @@ This application allows the owner (user) to add their restaurant for the other p
 1. [Fork and clone](https://github.com/truongphan97gl/restaurant-api) this repository.
 2. Run `npm install` to install all dependencies
 3. Ensure that you have nodemon installed by running `npm install -g nodemon.`
-4. Use `npm start` to spin up the server.
+4. Use `npm run server` to spin up the server.
 
 ## Important Links 
 
