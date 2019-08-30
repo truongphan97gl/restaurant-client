@@ -19,18 +19,18 @@ class Restaurant extends Component {
     }
   }
 
-  async componentDidMount () {
-    try {
-      const response = await axios(`${apiUrl}/restaurants/${this.props.match.params.id}`)
-      this.setState({ restaurant: response.data.restaurant })
-      this.likeChecking()
-    } catch (error) {
-      this.props.alert({
-        heading: 'Failure!!!!',
-        message: 'Failure to do action',
-        variant: 'warning'
+  componentDidMount () {
+    axios(`${apiUrl}/restaurants/${this.props.match.params.id}`)
+      .then(response => {
+        this.setState({ restaurant: response.data.restaurant })
       })
-    }
+      .catch(() => {
+        this.props.alert({
+          heading: 'Failure!!!!',
+          message: 'Failure to do action',
+          variant: 'warning'
+        })
+      })
   }
   like = () => {
     this.setState({ liked: !this.state.liked })
@@ -110,7 +110,6 @@ class Restaurant extends Component {
         })
       }
     }
-
     // render
     render () {
       const { deleted } = this.state
@@ -163,6 +162,7 @@ class Restaurant extends Component {
           'Loading...'
         )
       }
+
       let showLike = ''
       if (this.props.user) {
         showLike = this.state.liked ? unlikeButton : likeButton
