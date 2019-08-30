@@ -123,6 +123,7 @@ class Restaurant extends Component {
         // if (this.props.user !== null) {
         const userID = this.props.user._id
         if (this.state.restaurant.owner === userID) {
+          // Edit button
           editButton = (
             <Link to={`/restaurants/${this.props.match.params.id}/edit`}>
               <Button>Update</Button>
