@@ -64,7 +64,9 @@ class Restaurant extends Component {
     let foundLike = null
     if (this.props.user) {
       foundLike = this.state.restaurant.likes.find(like => like.owner._id === this.props.user._id)
-      id = foundLike._id
+      if (foundLike) {
+        id = foundLike._id
+      }
     }
 
     axios({
@@ -76,10 +78,10 @@ class Restaurant extends Component {
     })
   }
 
-  likeChecking = () => {
+  likeChecking = (response) => {
     let foundLike = null
     if (this.props.user) {
-      foundLike = this.state.restaurant.likes.find(like => like.owner._id === this.props.user._id)
+      foundLike = response.data.restaurant.likes.find(like => like.owner._id === this.props.user._id)
     }
     if (foundLike) {
       this.setState({ liked: true })
@@ -112,15 +114,20 @@ class Restaurant extends Component {
     }
     componentDidUpdate (prevProps, prevState) {
       if (prevState.restaurant !== this.state.restaurant) {
-        axios(`${apiUrl}/restaurants/${this.props.match.params.id}`)
-          .then(response => this.setState({ restaurant: response.data.restaurant }))
-          .catch(() => {
-            this.props.alert({
-              heading: 'Failure!!!!',
-              message: 'Failure to do action',
-              variant: 'warning'
+        if (prevProps.deleted) {
+          axios(`${apiUrl}/restaurants/${this.props.match.params.id}`)
+            .then(response => {
+              this.setState({ restaurant: response.data.restaurant })
+              this.likeChecking(response)
             })
-          })
+            .catch(() => {
+              this.props.alert({
+                heading: 'Failure!!!!',
+                message: 'Failure to do action',
+                variant: 'warning'
+              })
+            })
+        }
       }
     }
     // render
