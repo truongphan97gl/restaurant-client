@@ -110,7 +110,7 @@ class Restaurant extends Component {
         })
       }
     }
-    componentDidUpdate (prevState) {
+    componentDidUpdate (prevProps, prevState) {
       if (prevState.restaurant !== this.state.restaurant) {
         axios(`${apiUrl}/restaurants/${this.props.match.params.id}`)
           .then(response => this.setState({ restaurant: response.data.restaurant }))
