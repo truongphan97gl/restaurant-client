@@ -74,9 +74,6 @@ class CreateComment extends Component {
             variant: 'success'
           })
           this.setState({ geted: true })
-          response.data.comment.owner = {}
-          response.data.comment.owner.email = this.props.user.email
-          this.props.restaurant.comments.push(response.data.comment)
 
           // this.props.history.push(`/restaurants/${this.state.comment.restaurant}`)
         })

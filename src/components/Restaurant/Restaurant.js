@@ -110,6 +110,19 @@ class Restaurant extends Component {
         })
       }
     }
+    componentDidUpdate (prevState) {
+      if (prevState.restaurant !== this.state.restaurant) {
+        axios(`${apiUrl}/restaurants/${this.props.match.params.id}`)
+          .then(response => this.setState({ restaurant: response.data.restaurant }))
+          .catch(() => {
+            this.props.alert({
+              heading: 'Failure!!!!',
+              message: 'Failure to do action',
+              variant: 'warning'
+            })
+          })
+      }
+    }
     // render
     render () {
       const { deleted } = this.state

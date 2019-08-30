@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 
-const Comment = ({ id, com, user, handleDelete }) => {
+const Comment = ({ com, user, handleDelete }) => {
   const commentJsx =
       <React.Fragment key={com._id}>
         <p >{com.owner.email}: {com.text}</p>
