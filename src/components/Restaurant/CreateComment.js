@@ -42,7 +42,11 @@ class CreateComment extends Component {
           variant: 'success'
         })
       } catch (error) {
-        console.error(error)
+        this.props.alert({
+          heading: 'Failure!!!!',
+          message: 'Deleted Failure',
+          variant: 'warning'
+        })
       }
     }
 
@@ -74,7 +78,13 @@ class CreateComment extends Component {
           response.data.comment.owner.email = this.props.user.email
           this.props.history.push(`/restaurants/${this.state.restaurant}`)
         })
-        .catch(console.error)
+        .catch(() => {
+          this.props.alert({
+            heading: 'Failure!!!!',
+            message: 'Created Failure',
+            variant: 'warning'
+          })
+        })
     }
 
     render () {

@@ -22,7 +22,6 @@ class UpdateRestaurant extends Component {
     }
     delete = async () => {
       try {
-        // console.log(this.props)
         await axios({
           method: 'DELETE',
           url: `${apiUrl}/comments/${this.props.match.params.id}`,
@@ -37,7 +36,11 @@ class UpdateRestaurant extends Component {
           variant: 'success'
         })
       } catch (error) {
-        console.error(error)
+        this.props.alert({
+          heading: 'Failure!!!!',
+          message: 'Failure to do action',
+          variant: 'warning'
+        })
       }
     }
     handleChange = event => {
@@ -72,7 +75,13 @@ class UpdateRestaurant extends Component {
           })
         //   this.props.history.push(`/restaurants/${response.data.comment.restaurant}`)
         })
-        .catch(console.error)
+        .catch(() => {
+          this.props.alert({
+            heading: 'Failure!!!!',
+            message: 'Failure to do action',
+            variant: 'warning'
+          })
+        })
     }
 
     render () {

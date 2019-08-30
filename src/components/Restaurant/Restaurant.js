@@ -14,7 +14,8 @@ class Restaurant extends Component {
     this.state = {
       restaurant: null,
       deleted: false,
-      liked: false
+      liked: false,
+      unliked: false
     }
   }
 
@@ -24,7 +25,11 @@ class Restaurant extends Component {
       this.setState({ restaurant: response.data.restaurant })
       this.likeChecking()
     } catch (error) {
-      console.error(error)
+      this.props.alert({
+        heading: 'Failure!!!!',
+        message: 'Failure to do action',
+        variant: 'warning'
+      })
     }
   }
   like = () => {
@@ -49,13 +54,19 @@ class Restaurant extends Component {
     })
   }
   unlike = () => {
+    // TODO: PROBLEM WITH CLICK LIKE AND UNLIKE MULTIPLE TIMES
     this.setState({ liked: !this.state.liked })
     let token = ''
     if (this.props.user) {
       token = this.props.user.token
     }
-    const foundLike = this.state.restaurant.likes.find(like => like.owner._id === this.props.user._id)
-    const id = foundLike._id
+    let id = ''
+    let foundLike = null
+    if (this.props.user) {
+      foundLike = this.state.restaurant.likes.find(like => like.owner._id === this.props.user._id)
+      id = foundLike._id
+    }
+
     axios({
       method: 'DELETE',
       url: `${apiUrl}/likes/${id}`,
@@ -66,7 +77,10 @@ class Restaurant extends Component {
   }
 
   likeChecking = () => {
-    const foundLike = this.state.restaurant.likes.find(like => like.owner._id === this.props.user._id)
+    let foundLike = null
+    if (this.props.user) {
+      foundLike = this.state.restaurant.likes.find(like => like.owner._id === this.props.user._id)
+    }
     if (foundLike) {
       this.setState({ liked: true })
     } else {
@@ -89,7 +103,11 @@ class Restaurant extends Component {
           variant: 'success'
         })
       } catch (error) {
-        console.error(error)
+        this.props.alert({
+          heading: 'Failure!!!!',
+          message: 'Failure to do action',
+          variant: 'warning'
+        })
       }
     }
 
@@ -134,7 +152,7 @@ class Restaurant extends Component {
         restaurantJsx = (
           <div key = {this.state.restaurant._id}>
             <h5>{this.state.restaurant.title}</h5>
-            <p>Text {this.state.restaurant.text}</p>
+            <p> {this.state.restaurant.text}</p>
             {deleteButton}
             {editButton}
           </div>

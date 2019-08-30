@@ -13,9 +13,7 @@ class UpdateRestaurant extends Component {
     componentDidMount () {
       axios(`${apiUrl}/restaurants/${this.props.match.params.id}`)
         .then(response => {
-          console.log(response.data)
           this.setState({ restaurant: response.data.restaurant })
-          console.log(response.data.restaurant)
         })
         .catch(() => this.props.alert({
           heading: 'Error',
@@ -53,7 +51,13 @@ class UpdateRestaurant extends Component {
           })
           this.props.history.push(`/restaurants/${this.state.restaurant._id}`)
         })
-        .catch(console.error)
+        .catch(() => {
+          this.props.alert({
+            heading: 'Failure!!!!',
+            message: 'Failure to do action',
+            variant: 'warning'
+          })
+        })
     }
 
     render () {

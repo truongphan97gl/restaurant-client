@@ -28,7 +28,11 @@ class Restaurants extends Component {
       const response = await axios(`${apiUrl}/restaurants`)
       this.setState({ restaurants: response.data.restaurants })
     } catch (error) {
-      console.error(error)
+      this.props.alert({
+        heading: 'Failure!!!!',
+        message: 'Failure to do action',
+        variant: 'warning'
+      })
     }
   }
 

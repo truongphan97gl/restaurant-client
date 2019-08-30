@@ -43,7 +43,13 @@ class CreateRestaurant extends Component {
           })
           this.props.history.push(`/restaurants/${response.data.restaurant._id}`)
         })
-        .catch(console.error)
+        .catch(() => {
+          this.props.alert({
+            heading: 'Failure!!!!',
+            message: 'Failure to do action',
+            variant: 'warning'
+          })
+        })
     }
 
     render () {
