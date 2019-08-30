@@ -49,7 +49,6 @@ class CreateComment extends Component {
         })
       }
     }
-
     handleSubmit = event => {
       event.preventDefault()
       let token = ''
@@ -76,7 +75,8 @@ class CreateComment extends Component {
           this.props.restaurant.comments.push(response.data.comment)
           response.data.comment.owner = {}
           response.data.comment.owner.email = this.props.user.email
-          this.props.history.push(`/restaurants/${this.state.restaurant}`)
+
+          // this.props.history.push(`/restaurants/${this.state.comment.restaurant}`)
         })
         .catch(() => {
           this.props.alert({
@@ -96,7 +96,6 @@ class CreateComment extends Component {
       if (this.props.restaurant && this.props.user) {
         // if (!this.state.geted) {
         restaurantId = this.props.restaurant._id
-
         // const  commentsInside = this.props.restaurant
         allComment = (
           this.props.restaurant.comments.map(com => (
