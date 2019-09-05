@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 import apiUrl from '../../apiConfig'
-// import CreateComment from '../../components/Restaurant/CreateComment'
+import CreateComment from '../../components/Restaurant/CreateComment'
 import Button from 'react-bootstrap/Button'
 class Restaurant extends Component {
   // constructor
@@ -111,27 +111,27 @@ class Restaurant extends Component {
         })
       }
     }
-    // componentDidUpdate (prevProps, prevState) {
-    //   if (prevState.restaurant !== this.state.restaurant && !this.state.deleted) {
-    //     axios(`${apiUrl}/restaurants/${this.props.match.params.id}`)
-    //       .then(response => {
-    //         this.setState({ restaurant: response.data.restaurant })
-    //         this.likeChecking(response)
-    //       })
-    //       .catch(() => {
-    //         this.props.alert({
-    //           heading: 'Failure!!!!',
-    //           message: 'Failure to do action',
-    //           variant: 'warning'
-    //         })
-    //       })
-    //   }
-    // }
+    componentDidUpdate (prevProps, prevState) {
+      if (prevState.restaurant !== this.state.restaurant && !this.state.deleted) {
+        axios(`${apiUrl}/restaurants/${this.props.match.params.id}`)
+          .then(response => {
+            this.setState({ restaurant: response.data.restaurant })
+            this.likeChecking(response)
+          })
+          .catch(() => {
+            this.props.alert({
+              heading: 'Failure!!!!',
+              message: 'Failure to do action',
+              variant: 'warning'
+            })
+          })
+      }
+    }
     // render
     render () {
       const { deleted } = this.state
-      // const likeButton = <Button onClick={this.like}>Like 👍</Button>
-      // const unlikeButton = <Button variant="danger" onClick={this.unlike}>Unlike 👎</Button>
+      const likeButton = <Button onClick={this.like}>Like 👍</Button>
+      const unlikeButton = <Button variant="danger" onClick={this.unlike}>Unlike 👎</Button>
       let editButton = ''
       let deleteButton = ''
       let restaurantJsx = this.state.restaurant
@@ -180,19 +180,19 @@ class Restaurant extends Component {
         )
       }
 
-      // let showLike = ''
-      // if (this.props.user) {
-      //   showLike = this.state.liked ? unlikeButton : likeButton
-      // }
+      let showLike = ''
+      if (this.props.user) {
+        showLike = this.state.liked ? unlikeButton : likeButton
+      }
       return (
         <div>
           <h4>Restaurant: </h4>
           {restaurantJsx}
-          {/* { showLike} */}
+          { showLike}
           <div>
             <Link to="/restaurants">Back to all the restaurant</Link>
           </div>
-          {/* <CreateComment user={this.props.user} alert={this.props.alert} restaurant={this.state.restaurant}/> */}
+          <CreateComment user={this.props.user} alert={this.props.alert} restaurant={this.state.restaurant}/>
         </div>
 
       )

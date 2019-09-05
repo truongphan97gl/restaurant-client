@@ -70,7 +70,7 @@ class UpdateRestaurant extends Component {
           })
           this.props.alert({
             heading: 'Success!!!!',
-            message: 'You updated a restaurant.',
+            message: 'You updated a comment.',
             variant: 'success'
           })
         //   this.props.history.push(`/restaurants/${response.data.comment.restaurant}`)

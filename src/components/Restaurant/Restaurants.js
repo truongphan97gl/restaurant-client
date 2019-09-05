@@ -55,7 +55,6 @@ class Restaurants extends Component {
           </Card.Body>
           <ListGroup className="list-group-flush">
             <ListGroupItem>Like: {restaurant.likes.length}</ListGroupItem>
-            <ListGroupItem>TAG</ListGroupItem>
           </ListGroup>
         </Card>
       </React.Fragment>
