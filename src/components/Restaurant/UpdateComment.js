@@ -35,6 +35,7 @@ class UpdateRestaurant extends Component {
           message: 'Deleted success',
           variant: 'success'
         })
+        this.props.updateCheck()
       } catch (error) {
         this.props.alert({
           heading: 'Failure!!!!',
@@ -73,6 +74,8 @@ class UpdateRestaurant extends Component {
             message: 'You updated a comment.',
             variant: 'success'
           })
+          this.props.updateCheck()
+
         //   this.props.history.push(`/restaurants/${response.data.comment.restaurant}`)
         })
         .catch(() => {

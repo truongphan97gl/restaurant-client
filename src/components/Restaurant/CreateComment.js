@@ -43,6 +43,7 @@ class CreateComment extends Component {
           message: 'Deleted success',
           variant: 'success'
         })
+        this.props.updateCheck()
       } catch (error) {
         this.props.alert({
           heading: 'Failure!!!!',
@@ -74,16 +75,19 @@ class CreateComment extends Component {
             variant: 'success'
           })
           this.setState({ geted: true })
-
+          this.props.updateCheck()
+          // this.props.updateCommentState()
           // this.props.history.push(`/restaurants/${this.state.comment.restaurant}`)
         })
-        .catch(() => {
-          this.props.alert({
-            heading: 'Failure!!!!',
-            message: 'Created Failure',
-            variant: 'warning'
-          })
-        })
+        .catch(console.error)
+        // .catch(() => {
+
+      //   this.props.alert({
+      //     heading: 'Failure!!!!',
+      //     message: 'Created Failure',
+      //     variant: 'warning'
+      //   })
+      // })
     }
 
     render () {
@@ -97,7 +101,7 @@ class CreateComment extends Component {
         // const  commentsInside = this.props.restaurant
         allComment = (
           this.props.restaurant.comments.map(com => (
-            <Comment id={restaurantId} key={com._id} com={com} user={this.props.user} handleDelete={this.delete}/>
+            <Comment updateCommentState={this.props.updateCommentState} id={restaurantId} key={com._id} com={com} user={this.props.user} handleDelete={this.delete}/>
           ))
         )
       }

@@ -14,14 +14,17 @@ class Restaurant extends Component {
     this.state = {
       restaurant: null,
       deleted: false,
-      liked: false
+      liked: false,
+      updateComments: false
     }
   }
 
+  updateCommentState = () => this.setState({ updateComments: true })
   componentDidMount () {
     axios(`${apiUrl}/restaurants/${this.props.match.params.id}`)
       .then(response => {
         this.setState({ restaurant: response.data.restaurant })
+        this.likeChecking()
       })
       .catch(() => {
         this.props.alert({
@@ -51,6 +54,9 @@ class Restaurant extends Component {
         like: likeObject
       }
     })
+      .then(response => {
+        this.updateCommentState()
+      })
   }
   unlike = () => {
     // TODO: PROBLEM WITH CLICK LIKE AND UNLIKE MULTIPLE TIMES
@@ -75,12 +81,15 @@ class Restaurant extends Component {
         'Authorization': `Bearer ${token}`
       }
     })
+      .then(response => {
+        this.updateCommentState()
+      })
   }
 
-  likeChecking = (response) => {
+  likeChecking = () => {
     let foundLike = null
     if (this.props.user) {
-      foundLike = response.data.restaurant.likes.find(like => like.owner._id === this.props.user._id)
+      foundLike = this.state.restaurant.likes.find(like => like.owner._id === this.props.user._id)
     }
     if (foundLike) {
       this.setState({ liked: true })
@@ -88,115 +97,146 @@ class Restaurant extends Component {
       this.setState({ liked: false })
     }
   }
-    delete = async () => {
-      try {
-        await axios({
-          method: 'DELETE',
-          url: `${apiUrl}/restaurants/${this.props.match.params.id}`,
-          headers: {
-            Authorization: `Token token=${this.props.user.token}`
-          }
-        })
+  // delete = async () => {
+  //   try {
+  //     await axios({
+  //       method: 'DELETE',
+  //       url: `${apiUrl}/restaurants/${this.props.match.params.id}`,
+  //       headers: {
+  //         Authorization: `Token token=${this.props.user.token}`
+  //       }
+  //     })
+  //     this.props.alert({
+  //       heading: 'Success!!!!',
+  //       message: 'Deleted success',
+  //       variant: 'success'
+  //     })
+  //     this.setState({ deleted: true })
+
+  //     this.updateCommentState()
+  //   } catch (error) {
+  //     this.props.alert({
+  //       heading: 'Failure!!!!',
+  //       message: 'Failure to do action',
+  //       variant: 'warning'
+  //     })
+  //   }
+  // }
+  delete = () => {
+    axios({
+      method: 'DELETE',
+      url: `${apiUrl}/restaurants/${this.props.match.params.id}`,
+      headers: {
+        Authorization: `Token token=${this.props.user.token}`
+      }
+    })
+      .then(() => {
         this.setState({ deleted: true })
+
+        this.updateCommentState()
+      })
+      .then(() => {
         this.props.alert({
           heading: 'Success!!!!',
           message: 'Deleted success',
           variant: 'success'
         })
-      } catch (error) {
+      })
+
+      . catch((ß) => {
         this.props.alert({
           heading: 'Failure!!!!',
           message: 'Failure to do action',
           variant: 'warning'
         })
-      }
-    }
-    componentDidUpdate (prevProps, prevState) {
-      if (prevState.restaurant !== this.state.restaurant && !this.state.deleted) {
-        axios(`${apiUrl}/restaurants/${this.props.match.params.id}`)
-          .then(response => {
-            this.setState({ restaurant: response.data.restaurant })
-            this.likeChecking(response)
+      })
+  }
+  componentDidUpdate (prevProps, prevState) {
+    if (this.state.updateComments) {
+      axios(`${apiUrl}/restaurants/${this.props.match.params.id}`)
+        .then(response => {
+          this.setState({ restaurant: response.data.restaurant })
+          this.setState({ updateComments: false })
+        })
+        .catch(() => {
+          this.props.alert({
+            heading: 'Failure!!!!',
+            message: 'Failure to do action',
+            variant: 'warning'
           })
-          .catch(() => {
-            this.props.alert({
-              heading: 'Failure!!!!',
-              message: 'Failure to do action',
-              variant: 'warning'
-            })
-          })
-      }
+        })
     }
-    // render
-    render () {
-      const { deleted } = this.state
-      const likeButton = <Button onClick={this.like}>Like 👍</Button>
-      const unlikeButton = <Button variant="danger" onClick={this.unlike}>Unlike 👎</Button>
-      let editButton = ''
-      let deleteButton = ''
-      let restaurantJsx = this.state.restaurant
-      if (restaurantJsx && this.props.user) {
-        // if (this.props.user !== null) {
-        const userID = this.props.user._id
-        if (this.state.restaurant.owner === userID) {
-          // Edit button
-          editButton = (
-            <Link to={`/restaurants/${this.props.match.params.id}/edit`}>
-              <Button>Update</Button>
-            </Link>
-          )
-          deleteButton = (
-            <Button variant="danger" onClick={this.delete}>Delete This Restaurant</Button>
-          )
-        } else {
-          editButton = (
-            ''
-          )
-          deleteButton = (
-            ''
-          )
-        }
-        // }
-      }
-      if (deleted) {
-        return <Redirect to={
-          {
-            pathname: '/restaurants'
-          }
-        } />
-      } else
-      if (restaurantJsx) {
-        restaurantJsx = (
-          <div key = {this.state.restaurant._id}>
-            <h5>{this.state.restaurant.title}</h5>
-            <p> {this.state.restaurant.text}</p>
-            {deleteButton}
-            {editButton}
-          </div>
+  }
+  // render
+  render () {
+    const { deleted } = this.state
+    const likeButton = <Button onClick={this.like}>Like 👍</Button>
+    const unlikeButton = <Button variant="danger" onClick={this.unlike}>Unlike 👎</Button>
+    let editButton = ''
+    let deleteButton = ''
+    let restaurantJsx = this.state.restaurant
+    if (restaurantJsx && this.props.user) {
+      // if (this.props.user !== null) {
+      const userID = this.props.user._id
+      if (this.state.restaurant.owner === userID) {
+        // Edit button
+        editButton = (
+          <Link to={`/restaurants/${this.props.match.params.id}/edit`}>
+            <Button>Update</Button>
+          </Link>
+        )
+        deleteButton = (
+          <Button variant="danger" onClick={this.delete}>Delete This Restaurant</Button>
         )
       } else {
-        restaurantJsx = (
-          'Loading...'
+        editButton = (
+          ''
+        )
+        deleteButton = (
+          ''
         )
       }
-
-      let showLike = ''
-      if (this.props.user) {
-        showLike = this.state.liked ? unlikeButton : likeButton
-      }
-      return (
-        <div>
-          <h4>Restaurant: </h4>
-          {restaurantJsx}
-          { showLike}
-          <div>
-            <Link to="/restaurants">Back to all the restaurant</Link>
-          </div>
-          <CreateComment user={this.props.user} alert={this.props.alert} restaurant={this.state.restaurant}/>
+      // }
+    }
+    if (deleted) {
+      return <Redirect to={
+        {
+          pathname: '/restaurants'
+        }
+      } />
+    } else
+    if (restaurantJsx) {
+      restaurantJsx = (
+        <div key = {this.state.restaurant._id}>
+          <h5>{this.state.restaurant.title}</h5>
+          <p> {this.state.restaurant.text}</p>
+          {deleteButton}
+          {editButton}
         </div>
-
+      )
+    } else {
+      restaurantJsx = (
+        'Loading...'
       )
     }
+
+    let showLike = ''
+    if (this.props.user) {
+      showLike = this.state.liked ? unlikeButton : likeButton
+    }
+    return (
+      <div>
+        <h4>Restaurant: </h4>
+        {restaurantJsx}
+        { showLike}
+        <div>
+          <Link to="/restaurants">Back to all the restaurant</Link>
+        </div>
+        <CreateComment updateCheck={this.updateCommentState} user={this.props.user} alert={this.props.alert} restaurant={this.state.restaurant}/>
+      </div>
+
+    )
+  }
 }
 
 export default Restaurant
