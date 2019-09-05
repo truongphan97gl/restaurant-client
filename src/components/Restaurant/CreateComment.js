@@ -17,7 +17,13 @@ class CreateComment extends Component {
       updated: false,
       deleted: false
     }
-    responseFromGet= ''
+  resetForm = () => {
+    const comment = {
+      text: '',
+      post: this.props.restaurant._id
+    }
+    this.setState({ comment })
+  }
     handleChange = event => {
       this.setState({
         comment: {
@@ -74,20 +80,18 @@ class CreateComment extends Component {
             message: 'You created a comment.',
             variant: 'success'
           })
-          this.setState({ geted: true })
+          this.resetForm()
           this.props.updateCheck()
           // this.props.updateCommentState()
           // this.props.history.push(`/restaurants/${this.state.comment.restaurant}`)
         })
-        .catch(console.error)
-        // .catch(() => {
-
-      //   this.props.alert({
-      //     heading: 'Failure!!!!',
-      //     message: 'Created Failure',
-      //     variant: 'warning'
-      //   })
-      // })
+        .catch(() => {
+          this.props.alert({
+            heading: 'Failure!!!!',
+            message: 'Created Failure',
+            variant: 'warning'
+          })
+        })
     }
 
     render () {
