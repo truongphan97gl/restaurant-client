@@ -7,6 +7,8 @@ import Header from '../Header/Header'
 import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
+import GuestLogin from '../GuestLogin/GuestLogin'
+
 import ChangePassword from '../ChangePassword/ChangePassword'
 import Restaurants from '../Restaurant/Restaurants'
 import Restaurant from '../Restaurant/Restaurant'
@@ -96,6 +98,12 @@ class App extends Component {
           <Route path='/sign-in' render={() => (
             <SignIn alert={this.alert} setUser={this.setUser} />
           )} />
+          <Route path='/guest-login' render={() => {
+            // const setUser = { email: 'guest@guest', password: 'guest' }
+            return (
+              <GuestLogin alert = { this.alert } setUser = {this.setUser} />
+            )
+          }} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut alert={this.alert} clearUser={this.clearUser} user={user} />
           )} />

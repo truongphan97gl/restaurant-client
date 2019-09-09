@@ -46,7 +46,6 @@ class SignIn extends Component {
 
   render () {
     const { email, password } = this.state
-
     return (
       <div className="row">
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
