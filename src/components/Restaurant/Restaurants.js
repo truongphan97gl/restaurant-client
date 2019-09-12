@@ -43,32 +43,12 @@ class Restaurants extends Component {
 
   // render method!!!!!
   render () {
-    // const restaurantsJsx = this.state.restaurants.map(restaurant => (
-    //   <React.Fragment key={restaurant._id} >
-    //     <Card className="text-center mt-4 " style={{ width: '18rem' }}>
-    //       <Card.Img variant="top" src="https://img.icons8.com/ios-filled/100/000000/camera.png" />
-    //       <Card.Body>
-    //         <Link to={`/restaurants/${restaurant._id}`}>
-    //           {/* {restaurant._id} */}
-    //           <Card.Title>{restaurant.title}</Card.Title>
-    //         </Link>
-
-    //         <Card.Text>
-    //         </Card.Text>
-    //       </Card.Body>
-    //       <ListGroup className="list-group-flush">
-    //         <ListGroupItem>Like: {restaurant.likes.length}</ListGroupItem>
-    //       </ListGroup>
-    //     </Card>
-    //   </React.Fragment>
-    // ))
-
     const restaurantsJsx = this.state.restaurants.map(restaurant => (
       <React.Fragment key={restaurant._id} >
         <CardDeck>
-          <Card>
+          <Card className="card-size">
             <Link to={`/restaurants/${restaurant._id}`}>
-              <div id="logo">
+              <div id="logo" >
                 <CardImg top width="100%" src="https://www.justlifelogo.com/wp-content/uploads/2016/09/food-love-restaurant-logo-for-sale.jpg" alt="Card image cap" />
               </div>
             </Link>
@@ -77,7 +57,7 @@ class Restaurants extends Component {
                 <CardTitle className="text-center">
                   <h1>
                     {restaurant.title}
-a                  </h1>
+                  </h1>
                 </CardTitle>
               </Link>
               <CardFooter className="text-center">Like: {restaurant.likes.length}</CardFooter>
