@@ -19,7 +19,7 @@ const unauthenticatedOptions = (
 )
 
 const Header = ({ user }) => (
-  <Navbar bg="primary" variant="dark" expand="md">
+  <Navbar className="nav-bar" color="light" variant="dark" expand="md">
     <Navbar.Brand href="#">
       ResCheck
     </Navbar.Brand>

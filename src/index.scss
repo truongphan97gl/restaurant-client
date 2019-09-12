@@ -1,1 +1,29 @@
 @import '~bootstrap/scss/bootstrap';
+body {
+    // background: rgb(2,0,36);
+    background-size: cover;
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(7,56,152,1) 50%, rgba(0,212,255,1) 100%);
+    position: cover;
+}
+// he {
+//     color: black;
+//     padding-left: 100px;
+// }
+.nav-bar {
+//   background-color: rgb(125, 133, 112);
+    padding-left: 100px;
+    padding-right: 200px;
+}
+Card {
+  background-color: transparent;
+  background-color: transparent !important;
+}
+Card:hover {
+      background-color: yellow;
+      
+}
+#logo { height: 200px; width:300px; overflow: hidden; }
+
+.white-front {
+    color: white;
+}

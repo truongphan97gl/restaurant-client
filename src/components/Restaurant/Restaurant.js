@@ -5,6 +5,9 @@ import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import CreateComment from '../../components/Restaurant/CreateComment'
 import Button from 'react-bootstrap/Button'
+import {
+  Card, CardHeader, CardFooter, CardBody, CardText
+} from 'reactstrap'
 class Restaurant extends Component {
   // constructor
   constructor () {
@@ -97,31 +100,7 @@ class Restaurant extends Component {
       this.setState({ liked: false })
     }
   }
-  // delete = async () => {
-  //   try {
-  //     await axios({
-  //       method: 'DELETE',
-  //       url: `${apiUrl}/restaurants/${this.props.match.params.id}`,
-  //       headers: {
-  //         Authorization: `Token token=${this.props.user.token}`
-  //       }
-  //     })
-  //     this.props.alert({
-  //       heading: 'Success!!!!',
-  //       message: 'Deleted success',
-  //       variant: 'success'
-  //     })
-  //     this.setState({ deleted: true })
 
-  //     this.updateCommentState()
-  //   } catch (error) {
-  //     this.props.alert({
-  //       heading: 'Failure!!!!',
-  //       message: 'Failure to do action',
-  //       variant: 'warning'
-  //     })
-  //   }
-  // }
   delete = () => {
     axios({
       method: 'DELETE',
@@ -175,6 +154,10 @@ class Restaurant extends Component {
     let editButton = ''
     let deleteButton = ''
     let restaurantJsx = this.state.restaurant
+    let showLike = ''
+    if (this.props.user) {
+      showLike = this.state.liked ? unlikeButton : likeButton
+    }
     if (restaurantJsx && this.props.user) {
       // if (this.props.user !== null) {
       const userID = this.props.user._id
@@ -206,12 +189,35 @@ class Restaurant extends Component {
       } />
     } else
     if (restaurantJsx) {
+      let buttonShow = ''
+
+      if (this.props.user) {
+        const userID = this.props.user._id
+        if (this.state.restaurant.owner === userID) {
+          buttonShow = (
+            <CardFooter>
+              {deleteButton}
+              {editButton}
+            </CardFooter>
+          )
+        }
+      }
+
       restaurantJsx = (
         <div key = {this.state.restaurant._id}>
-          <h5>{this.state.restaurant.title}</h5>
-          <p> {this.state.restaurant.text}</p>
-          {deleteButton}
-          {editButton}
+          <Card>
+            <CardHeader>
+              <h1>{this.state.restaurant.title}</h1>
+              {showLike}
+
+            </CardHeader>
+            <CardBody>
+              {/* <CardTitle>Special Title Treatment</CardTitle> */}
+              <CardText>{this.state.restaurant.text}.</CardText>
+
+            </CardBody>
+            {buttonShow}
+          </Card>
         </div>
       )
     } else {
@@ -220,15 +226,9 @@ class Restaurant extends Component {
       )
     }
 
-    let showLike = ''
-    if (this.props.user) {
-      showLike = this.state.liked ? unlikeButton : likeButton
-    }
     return (
       <div>
-        <h4>Restaurant: </h4>
         {restaurantJsx}
-        { showLike}
         <div>
           <Link to="/restaurants">Back to all the restaurant</Link>
         </div>

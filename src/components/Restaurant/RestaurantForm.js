@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 const RestaurantForm = ({ restaurant, handleChange, handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
     <Form.Group controlId="title">
-      <Form.Label>Restaurant name :</Form.Label>
+      <Form.Label class="white-front">Restaurant name :</Form.Label>
       <Form.Control
         type="text"
         placeholder="Enter the restaurant's name :"
@@ -15,10 +15,10 @@ const RestaurantForm = ({ restaurant, handleChange, handleSubmit }) => (
         required
       />
     </Form.Group>
-
     <Form.Group controlId="text">
-      <Form.Label>Description</Form.Label>
+      <Form.Label class="white-front">Description</Form.Label>
       <Form.Control
+        class="white-front"
         type="text"
         placeholder="Enter the description"
         value={restaurant.text}
