@@ -75,7 +75,7 @@ class Restaurants extends Component {
     // }
     return (
       <div className="row d-flex justify-content-center">
-        { restaurantsJsx }
+        {restaurantsJsx}
         {/* {createButton} */}
       </div>
     )

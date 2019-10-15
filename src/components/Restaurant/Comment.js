@@ -4,20 +4,20 @@ import Button from 'react-bootstrap/Button'
 import { Card, CardText } from 'reactstrap'
 const Comment = ({ com, user, handleDelete }) => {
   const commentJsx =
-      <React.Fragment key={com._id}>
-        <Card body outline color="secondary">
-          <CardText>
-            <p >{com.owner.email}: {com.text}</p>
-            {user._id === com.owner._id ? <Button variant="danger" onClick={() => handleDelete(com._id, user)}>Delete</Button>
-              : ''}
-            <Link to={`/comments/${com._id}/edit`}>
-              {user._id === com.owner._id ? <Button>Updated</Button> : ''}
-            </Link>
-          </CardText>
+    <React.Fragment key={com._id}>
+      <Card body outline color="secondary">
+        <CardText>
+          <p>{com.owner.email}: {com.text}</p>
+          {user._id === com.owner._id ? <Button variant="danger" onClick={() => handleDelete(com._id, user)}>Delete</Button>
+            : ''}
+          <Link to={`/comments/${com._id}/edit`}>
+            {user._id === com.owner._id ? <Button>Updated</Button> : ''}
+          </Link>
+        </CardText>
 
-        </Card>
+      </Card>
 
-      </React.Fragment>
+    </React.Fragment>
   return commentJsx
 }
 

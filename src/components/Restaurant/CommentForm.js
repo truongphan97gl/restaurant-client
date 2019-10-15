@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 const CommentForm = ({ comment, handleChange, handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
     <Form.Group controlId="title">
-      <Form.Label class="white-front">Your comment on Restaurant: </Form.Label>
+      <Form.Label className="white-front">Your comment on Restaurant: </Form.Label>
       <Form.Control
         type="text"
         placeholder="Enter Your comment on the menu :"
@@ -16,7 +16,7 @@ const CommentForm = ({ comment, handleChange, handleSubmit }) => (
       />
     </Form.Group>
     <Button variant="primary" type="submit">
-            Submit
+      Submit
     </Button>
   </Form>
 )

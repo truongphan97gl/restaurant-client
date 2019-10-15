@@ -28,7 +28,7 @@ const RestaurantForm = ({ restaurant, handleChange, handleSubmit }) => (
       />
     </Form.Group>
     <Button variant="primary" type="submit">
-            Submit
+      Submit
     </Button>
   </Form>
 )

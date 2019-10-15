@@ -122,7 +122,7 @@ class Restaurant extends Component {
         })
       })
 
-      . catch((ß) => {
+      .catch((ß) => {
         this.props.alert({
           heading: 'Failure!!!!',
           message: 'Failure to do action',
@@ -204,7 +204,7 @@ class Restaurant extends Component {
       }
 
       restaurantJsx = (
-        <div key = {this.state.restaurant._id}>
+        <div key={this.state.restaurant._id}>
           <Card>
             <CardHeader>
               <h1>{this.state.restaurant.title}</h1>
@@ -232,7 +232,7 @@ class Restaurant extends Component {
         <div>
           <Link to="/restaurants">Back to all the restaurant</Link>
         </div>
-        <CreateComment updateCheck={this.updateCommentState} user={this.props.user} alert={this.props.alert} restaurant={this.state.restaurant}/>
+        <CreateComment updateCheck={this.updateCommentState} user={this.props.user} alert={this.props.alert} restaurant={this.state.restaurant} />
       </div>
 
     )
